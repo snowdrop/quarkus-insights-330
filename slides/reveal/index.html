@@ -10,40 +10,69 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Mono:wght@400;500&family=Red+Hat+Text:wght@300;400;500;700&display=swap">
 
   <style>
+    /* Quarkus brand */
     :root {
-      --r-main-font: "IBM Plex Sans", Arial, sans-serif;
-      --r-heading-font: "IBM Plex Sans", Arial, sans-serif;
-      --r-code-font: "IBM Plex Mono", Consolas, monospace;
+      --quarkus-blue: #4695eb;
+      --quarkus-red: #ff004a;
+      --quarkus-dark: #0d1c2c;
+      --r-main-font: "Red Hat Text", Arial, sans-serif;
+      --r-heading-font: "Red Hat Display", Arial, sans-serif;
+      --r-code-font: "Red Hat Mono", Consolas, monospace;
       --r-main-font-size: 34px;
-      --r-heading-font-weight: 600;
+      --r-main-color: #1e1e1e;
+      --r-heading-color: var(--quarkus-dark);
+      --r-heading-font-weight: 700;
       --r-heading-text-transform: none;
-      --r-link-color: #0f62fe;
-      --accent: #0f62fe;
+      --r-link-color: var(--quarkus-blue);
+      --r-link-color-hover: var(--quarkus-red);
+      --r-selection-background-color: var(--quarkus-blue);
     }
     .reveal .slides section { text-align: left; }
-    .reveal h2, .reveal h3 { color: var(--accent); }
+    .reveal h2, .reveal h3 { color: var(--quarkus-blue); }
     .reveal ul { display: block; font-weight: 300; }
     .reveal li { margin: 0.25em 0; }
-    .reveal strong { font-weight: 600; }
+    .reveal strong { font-weight: 700; }
+    .reveal li::marker { color: var(--quarkus-blue); }
 
-    /* Images: fit the 1600x900 slide */
-    .reveal section img { display: block; margin: 0.4em auto; max-height: 620px; border: 0; box-shadow: none; }
-    .reveal section img.tall { max-height: 720px; }
-    .reveal section img.full { max-height: 820px; }
-    .reveal section img.strip { max-height: 200px; }
-    .reveal section img.half { max-height: 420px; }
-
-    /* Cover slides: background picture + dark card with white text */
-    .reveal section.cover .logo { position: absolute; top: 0; left: 0; width: 220px; margin: 0; }
-    .reveal section.cover .card {
-      margin-top: 260px; padding: 40px 56px; max-width: 1100px;
-      background: rgba(10, 22, 52, 0.78); color: #fff; border-left: 8px solid var(--accent);
+    /* Content slides: white master with the Quarkus footer band. Slides with
+       data-background-image (cover, section) override it with an inline style. */
+    .reveal .slide-background-content {
+      background-image: url(images/quarkus-master.png);
+      background-size: cover;
+      background-position: center;
     }
-    .reveal section.cover h1 { color: #fff; font-size: 2.4em; margin-bottom: 0.4em; }
-    .reveal section.cover p { font-weight: 300; margin: 0; }
+    /* Keep content clear of the footer band */
+    .reveal .slides section:not(.cover):not(.section) { padding-bottom: 60px; }
+    .reveal .slide-number { background: transparent; color: #fff; font-family: var(--r-main-font); }
+    .reveal .controls { color: #fff; }
+
+    /* Images: fit the 1600x900 slide above the footer */
+    .reveal section img { display: block; margin: 0.4em auto; max-height: 600px; border: 0; box-shadow: none; }
+    .reveal section img.tall { max-height: 680px; }
+    .reveal section img.full { max-height: 760px; }
+    .reveal section img.strip { max-height: 200px; }
+    .reveal section img.half { max-height: 400px; }
+
+    /* Cover (title_bkg) and section (gradient_bkg) slides: white text, Quarkus logo */
+    .reveal section.cover, .reveal section.section { color: #fff; }
+    .reveal section.cover .logo, .reveal section.section .logo {
+      position: absolute; top: 0; left: 0; width: 360px; margin: 0;
+    }
+    /* The blue icon square disappears on the blue gradient: render the logo all white */
+    .reveal section.section .logo { filter: brightness(0) invert(1); }
+    .reveal section.cover h1, .reveal section.section h1,
+    .reveal section.section h2 { color: #fff; margin-bottom: 0.4em; }
+    .reveal section.cover h1 { font-size: 2.6em; margin-top: 180px; }
+    .reveal section.cover h1::after {
+      content: ""; display: block; width: 160px; height: 8px; margin-top: 28px;
+      background: linear-gradient(90deg, var(--quarkus-red), var(--quarkus-blue));
+    }
+    .reveal section.section h1 { font-size: 2.4em; margin-top: 160px; }
+    .reveal section.cover p, .reveal section.section p { font-weight: 300; margin: 0; }
+    .reveal section.section li::marker { color: #fff; }
 
     /* Two columns (slide with the rule YAML) */
     .reveal .columns { display: grid; grid-template-columns: 1fr 1.6fr; gap: 40px; align-items: start; }
@@ -51,16 +80,258 @@
     .reveal .columns pre code { max-height: 640px; }
     .reveal .source { font-size: 0.45em; margin-top: 0.6em; }
 
-    .reveal .stamp { position: absolute; right: 0; bottom: -40px; color: #da1e28; font-weight: 600; transform: rotate(-4deg); }
+    .reveal .stamp { position: absolute; right: 0; bottom: 20px; color: var(--quarkus-red); font-weight: 600; transform: rotate(-4deg); }
   </style>
 </head>
 <body>
   <div class="reveal">
     <div class="slides">
-      <section data-markdown="slides.md"
+      <section data-markdown
                data-separator="^\r?\n---\r?\n$"
-               data-separator-notes="^Note:"
-               data-charset="utf-8">
+               data-separator-notes="^Note:">
+        <textarea data-template>
+<!-- .slide: class="cover" data-background-image="images/quarkus-title-bkg.png" -->
+
+<img class="logo" src="images/quarkus-logo-reverse.svg" alt="Quarkus">
+
+# The problem: migration is hard !
+
+Charles Moulliard | IBM Sr. Principal Software Engineer - Quarkus
+
+---
+
+## Migration process looks simple ...
+
+![mtool: auditable pipeline](images/slide-02-mtool-pipeline.png) <!-- .element: class="tall" -->
+
+---
+
+### Code/File Analyser
+
+Treesitter, TreeSitter4j, Google Java Parser, OpenRewrite Parsers, ...
+
+![Code/File analyser](images/slide-03-code-analyser.png)
+
+---
+
+### Rule(s) processing
+
+Rule engine, Antlr – query parser, Scanner, ...
+
+![Rule(s) processing](images/slide-04-rules-processing.png)
+
+---
+
+### Transformation tool
+
+Openrewrite recipes
+
+![Transformation tool](images/slide-05-transformation-tool.png)
+
+---
+
+![Several modules to migrate](images/slide-06-modules-to-migrate.png) <!-- .element: class="full" -->
+
+---
+
+<!-- .slide: class="section" data-background-image="images/quarkus-gradient-bkg.png" -->
+
+## Demo part
+
+- **mtool**: Generate Migration plan from Application analyzed
+- **mtool**: transform it using instructions
+- Run App migrated and observations !
+
+---
+
+<!-- .slide: data-visibility="hidden" -->
+
+### Spring Boot => Quarkus using Openrewrite recipes
+
+![Spring Boot to Quarkus using OpenRewrite recipes](images/slide-08-openrewrite-recipes.png)
+
+---
+
+<div class="columns">
+<div>
+
+- Can another technology help us ?
+  - **=> AI** to the rescue
+- Mix **providers**: AI + openrewrite + etc
+- What we did here => **SKILL = Instructions + tools**
+- Mtool 2.x => **Quarkit**
+
+</div>
+<div>
+
+```yaml
+- category: mandatory
+  description: SpringBoot to Quarkus
+  labels:
+  - quarkit.io/source=springboot
+  - quarkit.io/target=quarkus
+  ruleID: 011-springboot-replace-dependency-jpa
+  when:
+    condition: |
+      properties.key is 'spring.jpa.*' AND
+      pom.dependency is (gavs="org.springframework.boot:spring-boot-starter-data-jpa")
+  instructions:
+    ai:
+    - tasks:
+      - "Replace Thymeleaf with Quarkus Qute."
+      - "Add the quarkus dependency: quarkus-jdbc-mysql"
+      - "Add the quarkus dependency: quarkus-spring-data-jpa, ..."
+    openrewrite:
+    - description: Replace the SpringBoot parent dependency with Quarkus BOM within the pom.xml file.
+```
+
+<p class="source">Source: <a href="https://github.com/snowdrop/migration-tool/blob/66d320c4fb832d777c84b857654035acb313bcdb/cookbook/rules/quarkus-spring/011-springboot-replace-dependency-jpa.yaml">011-springboot-replace-dependency-jpa.yaml</a></p>
+
+</div>
+</div>
+
+Note:
+Add AI instructions
+
+Mix instructions between providers: AI + openrewrite + x.y.z
+
+---
+
+<!-- .slide: data-visibility="hidden" -->
+
+### Migrating between frameworks is hard
+
+![Migrating between frameworks is hard](images/slide-10-migrating-frameworks-is-hard.png)
+
+Note:
+The full picture looks like this. A deterministic sandwich around the AI.
+
+[AI Skill] In the middle, the skill. It does the work that needs context: controller logic, template conversion, config reasoning, strategy decisions, tests. Tokens, flexible, variable. That's the price of understanding.
+
+[Validators] Next to it, the validators. They are deterministic: pure Java, zero tokens, same result every time. They compare the Quarkus project against the Spring source: project setup, entities and their relations, ID strategies, table names, REST endpoints, configuration, messaging.
+
+[MCP, nota amarilla] And they live in quarkit, our MCP server. If the server is running, the agent discovers the validators as tools and calls them by itself, during the migration.
+
+[feedback loop] When a validator fails, the result goes back to the skill, and the agent fixes it. AI proposes, rules verify.
+
+[Verified Quarkus Project] What comes out is not "a Quarkus project". It's a verified one.
+
+Let's see it run.
+
+The full picture looks like this. A deterministic sandwich around the AI. Before the migration, mtool analyzes the Spring project — scans dependencies, annotations, code patterns — and applies every transformation that has a clear mechanical rule. Import renames, dependency swaps, annotation replacements. No AI involved, no tokens spent, same result every time. Then the AI skill handles what needs understanding: controller logic, template conversion, contextual decisions about strategy. The AI gets a richer starting point because mtool has already done the analysis, so it makes fewer mistakes and spends fewer tokens. After the migration, deterministic validators verify the result — and that's what I want to show you next. One more thing: these deterministic tools can be exposed as MCP tools — discoverable by the AI agent, invoked automatically as part of the migration. The boundary between deterministic and AI isn't a wall, it's an interface.
+
+---
+
+<!-- .slide: class="section" data-background-image="images/quarkus-gradient-bkg.png" -->
+
+<img class="logo" src="images/quarkus-logo-reverse.svg" alt="Quarkus">
+
+# Quarkit architecture & vision
+
+Aurea Munoz Hernandez | IBM Principal Software Engineer - Quarkus
+
+---
+
+### How we built the Migration skill
+
+![Skill modules flow](images/slide-12-skill-modules-flow.png) <!-- .element: class="strip" -->
+
+![Skill modules and gates](images/slide-12-skill-modules-gates.png) <!-- .element: class="half" -->
+
+Note:
+You all know what a skill is: markdown the agent reads. Ours has one particularity: it gives the agent very little freedom.
+
+[señalar el flujo de arriba] It's not one prompt. It's eight modules, in a fixed order. Prerequisite, planning, build, code, testing, cleanup, and two optional ones: messaging and frontend.
+
+[señalar la tabla] Every module has a gate. The agent inspects your project and decides if the module applies. No Thymeleaf templates? Frontend is skipped. No Kafka listeners? Messaging is skipped. It only works on what exists.
+
+And look at the last column. After every module that changes code, the project is compiled. If it fails, there is a fix procedure: three retries, then it stops and asks a human. The agent does not get to "try something" forever.
+
+So the skill controls how the agent works. But who checks the result?
+
+---
+
+## High level view
+
+![Migration high level view](images/slide-13-migration-high-level-view.png)
+
+---
+
+## Anatomy of Quarkit
+
+![Anatomy of Quarkit](images/slide-14-quarkit-anatomy.png)
+
+---
+
+<!-- .slide: data-visibility="hidden" -->
+
+### Hybrid: deterministic + AI
+
+![Hybrid: deterministic + AI](images/slide-15-hybrid-deterministic-ai.png)
+
+Note:
+The full picture looks like this. A deterministic sandwich around the AI.
+
+[AI Skill] In the middle, the skill. It does the work that needs context: controller logic, template conversion, config reasoning, strategy decisions, tests. Tokens, flexible, variable. That's the price of understanding.
+
+[Validators] Next to it, the validators. They are deterministic: pure Java, zero tokens, same result every time. They compare the Quarkus project against the Spring source: project setup, entities and their relations, ID strategies, table names, REST endpoints, configuration, messaging.
+
+[MCP, nota amarilla] And they live in quarkit, our MCP server. If the server is running, the agent discovers the validators as tools and calls them by itself, during the migration.
+
+[feedback loop] When a validator fails, the result goes back to the skill, and the agent fixes it. AI proposes, rules verify.
+
+[Verified Quarkus Project] What comes out is not "a Quarkus project". It's a verified one.
+
+Let's see it run.
+
+---
+
+<!-- .slide: class="section" data-background-image="images/quarkus-gradient-bkg.png" -->
+
+<img class="logo" src="images/quarkus-logo-reverse.svg" alt="Quarkus">
+
+# Summary & Roadmap
+
+Aurea & Charles
+
+---
+
+## Roadmap & future
+
+- **Integrate** the MCP **tools** within the SKILLS
+- **Add** new **module/validator/checks** to support additional "starters"
+- Package the SKILL / MCP As **Agent Plugin**
+- **Develop** additional **tools** for analyze/planning parts
+- Measure **token cost & time**, with and without the Quarkit tools
+- **Resumable state**: pick up a migration where it stopped
+- **Enhance** the **architecture**. Why ? programming the logic part of the SKILL is not natural and could be better handled by a Flow Application
+
+<p class="stamp">Subject to change</p>
+
+---
+
+## Summary
+
+- **Migration** is **hard** => **Tools, Rules** & expertise needed !
+- **Tools** alone are **not enough** => to be combined with **AI**
+- **Recommendation:**
+  - **Adopt** Quarkit: (Skills + instructions + Tools)n + Tools + validators + etc
+- **Benefits**
+  - **Reduce** migration time: from weeks to hours
+  - **Verified** result, not just generated
+  - **Traceable**. Every migration produces a plan, a per-module report & a list of what was changed, skipped or removed, and why.
+  - Open and portable. Open-source skill and tools, any coding agent (Bob, Claude Code, Codex…)
+
+---
+
+<!-- .slide: class="cover" data-background-image="images/quarkus-title-bkg.png" -->
+
+<img class="logo" src="images/quarkus-logo-reverse.svg" alt="Quarkus">
+
+# Q/A
+
+Aurea & Charles
+        </textarea>
       </section>
     </div>
   </div>
